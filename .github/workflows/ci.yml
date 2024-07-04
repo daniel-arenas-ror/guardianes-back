@@ -1,0 +1,66 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [ opened, synchronize, closed ]
+
+jobs:
+  unit_test:
+    name: Unit and integration tests
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: guardianes_test
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1000
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+      - name: Run bundle
+        env:
+          BUNDLE_GITHUB__COM: ${{ secrets.BUNDLE_GITHUB_TOKEN }}
+        run: |
+          export HOME=$(pwd)
+          export PATH=$PATH:/home/ubuntu/.rbenv/shims:/home/ubuntu/.rbenv/bin:/home/ubuntu/.rbenv/shims:/home/ubuntu/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+          bundle install --path vendor/bundle --jobs 4 --retry 3
+
+      - name: Run db migrations
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      - name: Run Rspec
+        id: rspec-test
+        continue-on-error: true
+        run: |
+          git fetch --no-tags --prune --progress --depth=1000  origin main
+          bundle exec rspec
+
+      - name: Notify failure if rspec test fail, workaround for continue-on-error
+        if: steps.rspec-test.outcome != 'success'
+        run: exit 1
