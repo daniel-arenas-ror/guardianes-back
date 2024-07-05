@@ -7,6 +7,9 @@ ActiveAdmin.register Deal do
     worker_deals_attributes: [
       :id,
       :worker_id
+    ],
+    schedule_weeks_attributes: [
+      :id, :day, :from, :to
     ]
 
   form do |f|
@@ -19,6 +22,12 @@ ActiveAdmin.register Deal do
 
     f.has_many :worker_deals do |t|
       t.input :worker
+    end
+
+    f.has_many :schedule_weeks do |t|
+      t.input :day, as: :select, collection: [["Lunes", 1], ["Martes", 2], ["Miercoles", 3], ["Jueves", 4], ["Viernes", 5], ["Sabado", 6], ["Domingo", 0]]
+      t.input :from, type: :number, min: 0, max: 23
+      t.input :to, type: :number, min: 0, max: 23
     end
 
     f.actions
@@ -37,6 +46,12 @@ ActiveAdmin.register Deal do
       table_for deal.worker_deals do
         column "Worker" do |worker_deal|
           link_to worker_deal.name, [ :admin, worker_deal.worker ]
+        end
+      end
+
+      table_for deal.schedule_weeks do
+        column "Schedule weeks" do |scheduled|
+          p scheduled
         end
       end
     end

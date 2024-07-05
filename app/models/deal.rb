@@ -7,5 +7,7 @@ class Deal < ApplicationRecord
   has_many :worker_deals
   has_many :workers, through: :worker_deals
 
-  accepts_nested_attributes_for :service_deals, :worker_deals
+  has_many :schedule_weeks
+
+  accepts_nested_attributes_for :service_deals, :worker_deals, :schedule_weeks
 end
