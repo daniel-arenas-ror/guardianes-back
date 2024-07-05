@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe WorkerDeal, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { described_class.new }
+
+  describe "associations" do
+    it { is_expected.to belong_to(:worker) }
+    it { is_expected.to belong_to(:deal) }
+  end
 end
