@@ -51,7 +51,7 @@ ActiveAdmin.register Deal do
 
       table_for deal.schedule_weeks do
         column "Schedule weeks" do |scheduled|
-          p scheduled
+          div "#{scheduled.day}: #{scheduled.from} - #{scheduled.to}"
         end
       end
     end
