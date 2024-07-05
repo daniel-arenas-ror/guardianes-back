@@ -3,4 +3,9 @@ class Deal < ApplicationRecord
 
   has_many :service_deals
   has_many :services, through: :service_deals
+
+  has_many :worker_deals
+  has_many :workers, through: :worker_deals
+
+  accepts_nested_attributes_for :service_deals, :worker_deals
 end
