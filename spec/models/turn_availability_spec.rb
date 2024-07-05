@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe TurnAvailability, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { described_class.new }
+
+  describe "validations" do
+    it { is_expected.to belong_to(:turn) }
+    it { is_expected.to belong_to(:worker) }
+  end
 end
