@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_05_033749) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_05_040045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_05_033749) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "turn_availabilities", force: :cascade do |t|
+    t.bigint "turn_id", null: false
+    t.bigint "worker_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["turn_id"], name: "index_turn_availabilities_on_turn_id"
+    t.index ["worker_id"], name: "index_turn_availabilities_on_worker_id"
+  end
+
+  create_table "turns", force: :cascade do |t|
+    t.string "key"
+    t.bigint "worker_id", null: false
+    t.integer "week"
+    t.bigint "service_deal_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_deal_id"], name: "index_turns_on_service_deal_id"
+    t.index ["worker_id"], name: "index_turns_on_worker_id"
+  end
+
   create_table "worker_deals", force: :cascade do |t|
     t.bigint "worker_id", null: false
     t.bigint "deal_id", null: false
@@ -61,6 +81,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_05_033749) do
 
   add_foreign_key "service_deals", "deals"
   add_foreign_key "service_deals", "services"
+  add_foreign_key "turn_availabilities", "turns"
+  add_foreign_key "turn_availabilities", "workers"
+  add_foreign_key "turns", "service_deals"
+  add_foreign_key "turns", "workers"
   add_foreign_key "worker_deals", "deals"
   add_foreign_key "worker_deals", "workers"
 end
