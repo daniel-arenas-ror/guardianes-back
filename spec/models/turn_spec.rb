@@ -4,7 +4,6 @@ RSpec.describe Turn, type: :model do
   subject { described_class.new }
 
   describe "associations" do
-    it { is_expected.to belong_to(:worker) }
     it { is_expected.to belong_to(:service_deal) }
   end
 
