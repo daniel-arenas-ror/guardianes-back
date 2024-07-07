@@ -1,6 +1,8 @@
 module Api
   module V1
     class TurnAvailabilityController < BaseController
+      before_action :load_turn_availability, only: %w(destroy)
+
       def index
         turn_availabilities = TurnAvailability.all
 
@@ -11,6 +13,7 @@ module Api
         turn_availability = TurnAvailability.new(turn_availability_params)
 
         if turn_availability.save
+          # TODO run algorithm to assign turn
           render json: turn_availability, status: :ok
         else
           render json: turn_availability.errors.full_messages, status: status
@@ -18,6 +21,7 @@ module Api
       end
 
       def destroy
+        @turn_availability.destroy
 
         head :ok
       end
@@ -29,6 +33,10 @@ module Api
           :turn_id,
           :worker_id
         )
+      end
+
+      def load_turn_availability
+        @turn_availability = TurnAvailability.find(params[:id])
       end
     end
   end
