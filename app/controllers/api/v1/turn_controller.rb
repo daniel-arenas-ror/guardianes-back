@@ -1,6 +1,6 @@
 module Api
   module V1
-    class TurnController < ActionController::Base
+    class TurnController < BaseController
       def index
       end
     end

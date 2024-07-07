@@ -1,6 +1,6 @@
 module Api
   module V1
-    class TurnAvailabilityController < ActionController::Base
+    class TurnAvailabilityController < BaseController
       def index
         turn_availabilities = TurnAvailability.all
 
@@ -8,12 +8,12 @@ module Api
       end
 
       def create
-        turn_availabilities = TurnAvailability.new(turn_availability_params)
+        turn_availability = TurnAvailability.new(turn_availability_params)
 
-        if turn_availabilities.create
-          render json: turn_availabilities, status: :ok
+        if turn_availability.save
+          render json: turn_availability, status: :ok
         else
-          render json: turn_availabilities.errors.full_messages, status: status
+          render json: turn_availability.errors.full_messages, status: status
         end
       end
 
