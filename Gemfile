@@ -78,3 +78,4 @@ group :test do
 end
 
 gem 'activeadmin'
+gem 'rack-cors'
