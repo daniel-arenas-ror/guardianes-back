@@ -79,3 +79,4 @@ end
 
 gem 'activeadmin'
 gem 'rack-cors'
+gem 'jsonapi-rails'

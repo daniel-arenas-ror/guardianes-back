@@ -4,7 +4,7 @@ module Api
       before_action :load_deal, only: %w(show)
 
       def show
-        render json: @deal
+        render jsonapi: @deal
       end
 
       private
