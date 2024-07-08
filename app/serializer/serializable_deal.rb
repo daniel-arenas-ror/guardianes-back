@@ -1,7 +1,7 @@
 class SerializableDeal < JSONAPI::Serializable::Resource
   type 'deals'
 
-  attributes :id, :services, :workers
+  attributes :id, :serial, :services, :workers
 
   attribute :weeks do
     current_week = Date.today.strftime("%U").to_i
