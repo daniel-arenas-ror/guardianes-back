@@ -3,8 +3,8 @@ namespace :turn do
   task create_turn_next_week: :environment do
     Deal.all.each do |deal|
       deal.service_deals.each do |service_deal|
-        (1..5).each do |week|
-          date = Date.today.next_occurring(:sunday) + week.weeks
+        (0..5).each do |week|
+          date = Date.today + week.weeks
           deal.schedule_weeks.each do |schedule_week|
             date = date.advance(days: 1)
 

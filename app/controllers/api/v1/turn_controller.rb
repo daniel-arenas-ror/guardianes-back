@@ -10,7 +10,7 @@ module Api
                       service_id: params[:service_id]
                     }
                   )
-                  .order(key: :desc)
+                  .order(turn_date: :asc, hour: :asc)
 
         render json: turns
       end
