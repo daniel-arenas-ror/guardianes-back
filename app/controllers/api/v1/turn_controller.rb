@@ -10,6 +10,7 @@ module Api
                       service_id: params[:service_id]
                     }
                   )
+                  .order(key: :desc)
 
         render json: turns
       end
