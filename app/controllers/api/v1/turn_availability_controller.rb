@@ -4,7 +4,14 @@ module Api
       before_action :load_turn_availability, only: %w(destroy)
 
       def index
-        turn_availabilities = TurnAvailability.all
+        turn_availabilities = TurnAvailability
+                                .includes(turn: :service_deal)
+                                .where(turn: {
+                                  week: params[:week],
+                                  service_deals: {
+                                    service_id: params[:service_id]
+                                  }
+                                })
 
         render json: turn_availabilities
       end
