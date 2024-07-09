@@ -20,7 +20,8 @@ module Api
         turn_availability = TurnAvailability.new(turn_availability_params)
 
         if turn_availability.save
-          # TODO run algorithm to assign turn
+          TurnAssignation.new(turn_availability: turn_availability).process
+
           render json: turn_availability, status: :ok
         else
           render json: turn_availability.errors.full_messages, status: status
