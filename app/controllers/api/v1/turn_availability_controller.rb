@@ -20,7 +20,10 @@ module Api
         turn_availability = TurnAvailability.new(turn_availability_params)
 
         if turn_availability.save
-          TurnAssignation.new(turn_availability: turn_availability).process
+          TurnAssignation.new(
+            week: turn_availability.turn.week,
+            deal_id: turn_availability.turn.service_deal.deal_id
+          ).process
 
           render json: turn_availability, status: :ok
         else
@@ -29,7 +32,14 @@ module Api
       end
 
       def destroy
+        turn_assignation = TurnAssignation.new(
+          week: @turn_availability.turn.week,
+          deal_id: @turn_availability.turn.service_deal.deal_id
+        )
+
         @turn_availability.destroy
+
+        turn_assignation.process
 
         head :ok
       end
