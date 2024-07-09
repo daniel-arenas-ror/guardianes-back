@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :turn_availability, only: %i[index create destroy]
       resources :turn, only: %i[index]
+      resources :turn_report, only: %i[index]
       resources :deal, only: %i[show]
     end
   end
