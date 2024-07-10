@@ -33,7 +33,15 @@ class TurnAssignation
 
       workers_available.each do |worker_available|
         if worker_available == worker_id_least_turns
-          week_turns.where(turn_date: turn_date).update!(worker_id: worker_available)
+          week_turns
+            .includes(:turn_availabilities)
+            .where(
+              turn_date: turn_date,
+              turn_availabilities: {
+                worker_id: worker_available
+              }
+            )
+            .update!(worker_id: worker_available)
         end
       end
     end
