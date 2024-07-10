@@ -6,12 +6,12 @@ Con este proyecto queremos administrar las horas que los expertos informáticos 
 
 [Modelos](https://miro.com/app/board/uXjVMZ6LvYo=/)
 
-*Deal:*  Es el modelo donde se relaciona los contratos, horarios y trabajadores
-*ScheduleWeek:* Donde guardamos los dias de la semana que se va a trabajar en determinado contrato y el rango de horas por cada dia
-*Serivice:* Los diferentes servicios que se ofrecen
-*Worker:* Los trabajadores encargados de los contratos
-*Turns:* Los turnos generamos por contratos, estos turnos se van generando semana tra semana corriendo el job `rails turn:create_turn_next_week`
-*TurnAvailability:* Se guardan que trabajadores estan disponibles para que turnos
+*Deal:*  Es el modelo donde se relaciona los contratos, horarios y trabajadores  
+*ScheduleWeek:* Donde guardamos los dias de la semana que se va a trabajar en determinado contrato y el rango de horas por cada dia  
+*Serivice:* Los diferentes servicios que se ofrecen  
+*Worker:* Los trabajadores encargados de los contratos  
+*Turns:* Los turnos generamos por contratos, estos turnos se van generando semana tra semana corriendo el job `rails turn:create_turn_next_week`  
+*TurnAvailability:* Se guardan que trabajadores estan disponibles para que turnos  
 
 ## Instalación
 
