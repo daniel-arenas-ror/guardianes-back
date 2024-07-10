@@ -29,8 +29,14 @@ docker-compose -f docker-compose.yml up -d
 
 de no ser asi, duplicar el archivo .env.example y configurar las credenciales de la BD
 
-para correr la aplicación
+para iniciar con datos iniciales, corre el siguiente comando
 
+```
+rails db:seed
+```
+`rails turn:create_turn_next_week` para generar los turnos de la siguientes semanas
+
+para correr la aplicación
 ```
 rails s
 ```

@@ -14,13 +14,15 @@ namespace :turn do
             (from..to).each do |hour|
               key = "#{hour}_#{date.strftime("%d_%m_%Y")}"
 
-              Turn.create!(
+              turn = Turn.new(
                 key: key,
                 turn_date: date,
                 hour: hour,
                 week: date.strftime('%-V').to_i,
                 service_deal: service_deal
               )
+
+              turn.save
             end
           end
         end
