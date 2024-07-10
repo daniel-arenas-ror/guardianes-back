@@ -42,3 +42,5 @@ rails s
 ```
 
 Al ingresar a la URL `http://localhost:3000/admin/dashboard` te encontraras con el sistema de administración de los contratos y trabajadores
+
+Video Demo en [Loom](https://www.loom.com/share/729da571da484a57a7272887e5ec749a)
