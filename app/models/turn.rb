@@ -6,4 +6,14 @@ class Turn < ApplicationRecord
 
   validates :key, :week, :turn_date, :hour, presence: true
   validates :key, uniqueness: true
+
+  scope :with_availability, -> (turn_date, worker_available) {
+    includes(:turn_availabilities)
+    .where(
+      turn_date: turn_date,
+      turn_availabilities: {
+        worker_id: worker_available
+      }
+    )
+  }
 end

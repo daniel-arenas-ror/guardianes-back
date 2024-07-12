@@ -17,6 +17,8 @@ class TurnAssignation
     week_turns.each do |turn|
       worker_id = turn.turn_availabilities.first&.worker_id
       turn.update!(worker_id: worker_id) if turn.turn_availabilities.count == 1
+
+      Turn.with_availability(turn.turn_date, worker_id).update_all(worker_id: worker_id)
     end
 
     turns_without_assignation = week_turns.where(worker_id: nil)
@@ -25,7 +27,6 @@ class TurnAssignation
     turns_by_worker = workers.to_h {|w| [w.id, 0] }.merge(turns_by_worker)
     worker_id_least_turns = turns_by_worker.min_by { |_key, value| value }.first
 
-    # turn_date = turns_without_assignation.distinct.pluck(:turn_date).sort.first
     turns_without_assignation.distinct.pluck(:turn_date).sort.each do |turn_date|
       turns_id = week_turns.where(turn_date: turn_date).pluck(:id)
 
@@ -34,13 +35,7 @@ class TurnAssignation
       workers_available.each do |worker_available|
         if worker_available == worker_id_least_turns
           week_turns
-            .includes(:turn_availabilities)
-            .where(
-              turn_date: turn_date,
-              turn_availabilities: {
-                worker_id: worker_available
-              }
-            )
+            .with_availability(turn_date, worker_available)
             .update!(worker_id: worker_available)
         end
       end
