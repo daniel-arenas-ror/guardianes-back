@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :service do
-    name { "service name" }
+    name { Faker::Games::Dota.item }
   end
 end

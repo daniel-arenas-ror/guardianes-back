@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :deal do
-    serial { "serial" }
+    serial { Faker::Config.random.seed }
   end
 end

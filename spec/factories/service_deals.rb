@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :service_deal do
-    service { nil }
-    deal { nil }
+    service
+    deal
   end
 end

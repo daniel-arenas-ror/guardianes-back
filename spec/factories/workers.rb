@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :worker do
-    name { "MyString" }
-    color { "MyString" }
+    name { Faker::Games::SuperMario.character }
+    color { Faker::Color.hex_color }
   end
 end
