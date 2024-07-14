@@ -5,7 +5,7 @@ class Turn < ApplicationRecord
   has_many :turn_availabilities
 
   validates :key, :week, :turn_date, :hour, presence: true
-  validates :key, uniqueness: true
+  validates :key, uniqueness: { case_sensitive: false }
 
   scope :with_availability, -> (turn_date, worker_available) {
     includes(:turn_availabilities)
